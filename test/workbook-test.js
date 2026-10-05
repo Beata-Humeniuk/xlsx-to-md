@@ -91,4 +91,29 @@ check('rich text and escaped characters in shared strings', () => {
   eq(one.text[0][1], 'Line\ntwo');
 });
 
+check('macro-enabled workbook (.xlsm): macros and macro sheets are skipped', () => {
+  const MAIN = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+  const REL = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+  const PKG = 'http://schemas.openxmlformats.org/package/2006/relationships';
+  const buf = zip({
+    '[Content_Types].xml': '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+      + '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.ms-excel.sheet.macroEnabled.main+xml"/></Types>',
+    '_rels/.rels': '<Relationships xmlns="' + PKG + '"><Relationship Id="r" Type="' + REL + '/officeDocument" Target="xl/workbook.xml"/></Relationships>',
+    'xl/workbook.xml': '<workbook xmlns="' + MAIN + '" xmlns:r="' + REL + '"><sheets>'
+      + '<sheet name="Macro1" sheetId="1" r:id="m"/><sheet name="Data" sheetId="2" r:id="w"/></sheets></workbook>',
+    'xl/_rels/workbook.xml.rels': '<Relationships xmlns="' + PKG + '">'
+      + '<Relationship Id="m" Type="http://schemas.microsoft.com/office/2006/relationships/xlMacrosheet" Target="macrosheets/sheet1.xml"/>'
+      + '<Relationship Id="w" Type="' + REL + '/worksheet" Target="worksheets/sheet1.xml"/>'
+      + '<Relationship Id="v" Type="http://schemas.microsoft.com/office/2006/relationships/vbaProject" Target="vbaProject.bin"/></Relationships>',
+    'xl/macrosheets/sheet1.xml': '<xm:macrosheet xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main"/>',
+    'xl/vbaProject.bin': Buffer.from([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]),
+    'xl/worksheets/sheet1.xml': '<worksheet xmlns="' + MAIN + '"><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>Field</t></is></c></row>'
+      + '<row r="2"><c r="A2" t="inlineStr"><is><t>id</t></is></c></row></sheetData></worksheet>',
+  });
+  eq(sniff(buf), 'xlsx');
+  const wb = openWorkbook(buf);
+  eq(JSON.stringify(wb.sheets), JSON.stringify([{ name: 'Data', hidden: false }]));
+  eq(wb.loadSheet(0).text.map((r) => r[0]).join(','), 'Field,id');
+});
+
 require('./harness').done('workbook');
