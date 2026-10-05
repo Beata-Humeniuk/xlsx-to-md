@@ -18,6 +18,10 @@ telemetry and never runs formulas or macros: it reads the values Excel saved.
 
 Old `.xls` files need to be saved as `.xlsx` in Excel first.
 
+Files named `~$…` next to a workbook are Excel's temporary lock files, kept
+while the workbook is open in Excel; they hold no data. Open the workbook
+itself — the extension offers it when you open a lock file by mistake.
+
 ### CSV files
 
 A CSV file opens as a workbook with one sheet, named after the file, and

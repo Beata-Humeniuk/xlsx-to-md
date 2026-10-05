@@ -1127,6 +1127,10 @@ window.addEventListener('message', (e) => {
       const app = document.getElementById('app');
       app.className = 'fatal';
       app.textContent = m.message;
+      if (m.action) {
+        app.appendChild(h('div', { class: 'fatal-actions' },
+          h('button', { class: 'primary', onClick: () => post({ type: 'openOriginal' }), text: m.action })));
+      }
       break;
     }
     default: break;

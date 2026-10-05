@@ -21,6 +21,9 @@ const EN = {
   'error.oldXls': '{file} is in the old .xls format. Open it in Excel and save it as .xlsx (Excel Workbook), then try again.',
   'error.failed': 'Could not read {file}: {reason}',
   'error.noSheets': '{file} has no worksheets with cells.',
+  'error.lockFile': '{file} is not a workbook: it is the temporary lock file Excel keeps next to {original} while that workbook is open. Open {original} instead.',
+  'error.lockFileUnknown': '{file} is not a workbook: it is the temporary lock file Excel keeps next to a workbook while it is open. Open the workbook itself — the file whose name does not start with “~$”.',
+  'action.openWorkbook': 'Open {file}',
 
   'info.exported': 'Saved {file}.',
   'info.copied': 'Markdown copied to the clipboard.',
@@ -199,6 +202,9 @@ const PL = {
   'error.oldXls': '{file} jest w starym formacie .xls. Otwórz go w Excelu, zapisz jako .xlsx (Skoroszyt programu Excel) i spróbuj ponownie.',
   'error.failed': 'Nie udało się odczytać {file}: {reason}',
   'error.noSheets': '{file} nie ma arkuszy z komórkami.',
+  'error.lockFile': '{file} to nie skoroszyt, tylko tymczasowy plik blokady, który Excel trzyma obok {original}, gdy ten skoroszyt jest otwarty. Otwórz {original}.',
+  'error.lockFileUnknown': '{file} to nie skoroszyt, tylko tymczasowy plik blokady, który Excel trzyma obok otwartego skoroszytu. Otwórz sam skoroszyt — plik, którego nazwa nie zaczyna się od „~$”.',
+  'action.openWorkbook': 'Otwórz {file}',
 
   'info.exported': 'Zapisano {file}.',
   'info.copied': 'Skopiowano Markdown do schowka.',

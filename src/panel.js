@@ -9,6 +9,7 @@ const vscode = require('vscode');
 const path = require('path');
 const { openWorkbook, sniff } = require('./workbook');
 const { openCsv, isCsvName } = require('./csv');
+const { isLockFile, workbookFor } = require('./lockFile');
 const { resolveSource } = require('./core/resolve');
 const { messagesFor, baseLanguage } = require('./nls');
 const { summary, conditionsText } = require('./filters');
@@ -104,7 +105,29 @@ class WorkbookPanel {
     vscode.window.showErrorMessage(this.nls.t('error.failed', { file: this.fileName, reason: e && e.message ? e.message : String(e) }));
   }
 
+  // Excel's lock file "~$name" instead of the workbook: say so and offer
+  // the workbook itself when it is in the same folder.
+  async lockFileError() {
+    const dir = vscode.Uri.joinPath(this.uri, '..');
+    let names = [];
+    try {
+      names = (await vscode.workspace.fs.readDirectory(dir)).map(([n]) => n);
+    } catch {
+      names = [];
+    }
+    const original = workbookFor(this.fileName, names);
+    this.original = original ? vscode.Uri.joinPath(dir, original) : null;
+    const message = original
+      ? this.nls.t('error.lockFile', { file: this.fileName, original })
+      : this.nls.t('error.lockFileUnknown', { file: this.fileName });
+    return Object.assign(new Error(message), {
+      shown: true,
+      action: original ? this.nls.t('action.openWorkbook', { file: original }) : null,
+    });
+  }
+
   async load() {
+    if (isLockFile(this.fileName)) throw await this.lockFileError();
     const bytes = Buffer.from(await vscode.workspace.fs.readFile(this.uri));
     const kind = sniff(bytes);
     if (isCsvName(this.fileName) && kind !== 'xlsx') {
@@ -152,6 +175,12 @@ class WorkbookPanel {
           await this.store.rememberValues(m.filterId, m.values || {});
         }
         return undefined;
+      case 'openOriginal':
+        if (this.original) {
+          await vscode.commands.executeCommand('vscode.openWith', this.original, 'xlsxToMd.workbook');
+          this.panel.dispose();
+        }
+        return undefined;
       case 'manageFilters': return vscode.commands.executeCommand('xlsxToMd.manageFilters');
       case 'export': return this.exportMarkdown(m.markdown, m.nameHint);
       case 'copy':
@@ -172,7 +201,11 @@ class WorkbookPanel {
       try {
         await this.load();
       } catch (e) {
-        this.post({ type: 'fatal', message: e.shown ? e.message : this.nls.t('error.failed', { file: this.fileName, reason: e.message }) });
+        this.post({
+          type: 'fatal',
+          message: e.shown ? e.message : this.nls.t('error.failed', { file: this.fileName, reason: e.message }),
+          action: e.action || null,
+        });
         throw Object.assign(e, { shown: !!e.shown });
       }
     }

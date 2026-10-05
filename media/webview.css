@@ -36,7 +36,8 @@ html, body {
   color: var(--muted);
 }
 
-#app.fatal { color: var(--vscode-errorForeground); }
+#app.fatal { color: var(--vscode-errorForeground); max-width: 720px; line-height: 1.5; }
+.fatal-actions { margin-top: 14px; }
 
 .app {
   display: flex;

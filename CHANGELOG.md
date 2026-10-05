@@ -3,6 +3,15 @@
 This file lists user-visible changes to Excel & CSV to Markdown. The project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.1] - 2026-10-05
+
+### Fixed
+
+- Excel's temporary lock files (`~$name.xlsx`, `~$name.xlsm`, present while
+  a workbook is open in Excel) are no longer offered in the Explorer menu.
+  Opened anyway, they explain what they are and offer to open the workbook
+  itself instead of reporting "not an Excel workbook".
+
 ## [0.2.0] - 2026-10-05
 
 ### Added
