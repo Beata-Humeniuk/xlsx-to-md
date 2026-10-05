@@ -1,0 +1,129 @@
+{
+  "name": "xlsx-to-md",
+  "displayName": "Excel to Markdown",
+  "description": "%description%",
+  "version": "0.1.0",
+  "publisher": "beatahumeniuk",
+  "icon": "media/icon.png",
+  "license": "MIT",
+  "author": {
+    "name": "Beata Humeniuk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Beata-Humeniuk/xlsx-to-md.git"
+  },
+  "homepage": "https://github.com/Beata-Humeniuk/xlsx-to-md#readme",
+  "bugs": {
+    "url": "https://github.com/Beata-Humeniuk/xlsx-to-md/issues"
+  },
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "excel",
+    "xlsx",
+    "spreadsheet",
+    "markdown",
+    "table",
+    "converter",
+    "filter"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "xlsxToMd.open",
+        "title": "%command.open.title%",
+        "category": "Excel to Markdown"
+      },
+      {
+        "command": "xlsxToMd.manageFilters",
+        "title": "%command.manageFilters.title%",
+        "category": "Excel to Markdown"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "xlsxToMd.workbook",
+        "displayName": "Excel to Markdown",
+        "selector": [
+          {
+            "filenamePattern": "*.xlsx"
+          },
+          {
+            "filenamePattern": "*.xlsm"
+          },
+          {
+            "filenamePattern": "*.xltx"
+          },
+          {
+            "filenamePattern": "*.xltm"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "xlsxToMd.open",
+          "when": "resourceExtname =~ /^\\.(xlsx|xlsm|xltx|xltm)$/i",
+          "group": "7_modification"
+        }
+      ]
+    },
+    "configuration": [
+      {
+        "title": "Excel to Markdown",
+        "properties": {
+          "xlsxToMd.openAfterExport": {
+            "type": "string",
+            "enum": [
+              "editor",
+              "preview",
+              "none"
+            ],
+            "enumDescriptions": [
+              "%config.openAfterExport.editor%",
+              "%config.openAfterExport.preview%",
+              "%config.openAfterExport.none%"
+            ],
+            "default": "editor",
+            "markdownDescription": "%config.openAfterExport.description%"
+          }
+        }
+      },
+      {
+        "id": "xlsxToMd.savedFilters",
+        "title": "%config.savedFilters.title%",
+        "properties": {
+          "xlsxToMd.rememberValues": {
+            "type": "boolean",
+            "default": true,
+            "markdownDescription": "%config.rememberValues.description%"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "build": "esbuild src/extension.js --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --minify --charset=utf8 && esbuild src/webview/main.js --bundle --outfile=out/webview.js --format=iife --platform=browser --target=es2020 --minify --charset=utf8",
+    "vscode:prepublish": "npm run build",
+    "test": "node test/nls-test.js && node test/numfmt-test.js && node test/workbook-test.js && node test/filter-test.js && node test/extract-test.js && node test/resolve-test.js && node test/recipe-test.js",
+    "package": "npm run build && vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "3.9.2",
+    "esbuild": "^0.21.5"
+  }
+}

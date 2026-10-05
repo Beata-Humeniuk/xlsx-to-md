@@ -1,0 +1,11 @@
+{
+  "description": "Zamień potrzebną część skoroszytu Excela na Markdown: wybierz arkusz i zakresy w podglądzie, kolumny po nazwach, przefiltruj wiersze, zobacz wynik — i zapisz to ustawienie jako filtr do użycia z dowolnym skoroszytem.",
+  "command.open.title": "Eksportuj do Markdown…",
+  "command.manageFilters.title": "Zarządzaj zapisanymi filtrami",
+  "config.openAfterExport.description": "Co otworzyć po wyeksportowaniu Markdown do pliku.",
+  "config.openAfterExport.editor": "Plik Markdown w edytorze",
+  "config.openAfterExport.preview": "Podgląd Markdown",
+  "config.openAfterExport.none": "Nic, tylko powiadomienie",
+  "config.savedFilters.title": "Zapisane filtry",
+  "config.rememberValues.description": "Gdy zapisany filtr prosi o wartości przy użyciu, podpowiadaj wartości podane poprzednio.\n\nZapisane filtry są dostępne w każdym projekcie. [Zarządzaj zapisanymi filtrami](command:xlsxToMd.manageFilters) — lista, zmiana nazwy i usuwanie."
+}
