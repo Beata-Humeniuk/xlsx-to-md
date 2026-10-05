@@ -47,7 +47,7 @@ jobs:
           const manifest = require('/tmp/extension-package.json');
           const expected = {
             name: 'xlsx-to-md',
-            displayName: 'Excel to Markdown',
+            displayName: 'Excel & CSV to Markdown',
             publisher: 'beatahumeniuk',
             version: require('./package.json').version,
           };

@@ -1,6 +1,6 @@
 # Changelog
 
-This file lists user-visible changes to Excel to Markdown. The project follows
+This file lists user-visible changes to Excel & CSV to Markdown. The project follows
 [Semantic Versioning](https://semver.org/).
 
 ## [0.2.0] - 2026-10-05
@@ -10,6 +10,11 @@ This file lists user-visible changes to Excel to Markdown. The project follows
 - CSV and TSV files, with the same editor, conditions and saved filters as
   workbooks. The separator and encoding (UTF-8, UTF-16, Windows-1250) are
   recognized automatically; Excel's `sep=` line is honoured.
+
+### Changed
+
+- The extension is called **Excel & CSV to Markdown** (the identifier stays
+  `xlsx-to-md`).
 
 ## [0.1.0] - 2026-10-05
 

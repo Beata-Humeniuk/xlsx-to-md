@@ -1,4 +1,4 @@
-# Excel to Markdown
+# Excel & CSV to Markdown
 
 Take exactly the part of an Excel workbook or CSV file you need and turn it
 into Markdown — not the whole file. Pick the sheet and the cells in a live grid,
@@ -13,8 +13,8 @@ telemetry and never runs formulas or macros: it reads the values Excel saved.
 
 - In the Explorer, right-click an `.xlsx` (or `.xlsm`, `.xltx`, `.xltm`),
   `.csv` or `.tsv` file and choose **Export to Markdown…**.
-- Or run **Excel to Markdown: Export to Markdown…** from the Command Palette.
-- Or **Open With… → Excel to Markdown** on the file.
+- Or run **Excel & CSV to Markdown: Export to Markdown…** from the Command Palette.
+- Or **Open With… → Excel & CSV to Markdown** on the file.
 
 Old `.xls` files need to be saved as `.xlsx` in Excel first.
 
@@ -132,7 +132,7 @@ After applying a filter you can still change anything. The filter is marked
 
 ### Managing filters
 
-**Excel to Markdown: Manage Saved Filters** lists the filters with what they
+**Excel & CSV to Markdown: Manage Saved Filters** lists the filters with what they
 do, and lets you rename or delete them. The same list is linked from the
 extension's **Saved filters** settings section and from the filter list in
 the editor.

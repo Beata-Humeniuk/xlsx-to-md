@@ -1,6 +1,6 @@
 {
   "name": "xlsx-to-md",
-  "displayName": "Excel to Markdown",
+  "displayName": "Excel & CSV to Markdown",
   "description": "%description%",
   "version": "0.2.0",
   "publisher": "beatahumeniuk",
@@ -45,18 +45,18 @@
       {
         "command": "xlsxToMd.open",
         "title": "%command.open.title%",
-        "category": "Excel to Markdown"
+        "category": "Excel & CSV to Markdown"
       },
       {
         "command": "xlsxToMd.manageFilters",
         "title": "%command.manageFilters.title%",
-        "category": "Excel to Markdown"
+        "category": "Excel & CSV to Markdown"
       }
     ],
     "customEditors": [
       {
         "viewType": "xlsxToMd.workbook",
-        "displayName": "Excel to Markdown",
+        "displayName": "Excel & CSV to Markdown",
         "selector": [
           {
             "filenamePattern": "*.xlsx"
@@ -91,7 +91,7 @@
     },
     "configuration": [
       {
-        "title": "Excel to Markdown",
+        "title": "Excel & CSV to Markdown",
         "properties": {
           "xlsxToMd.openAfterExport": {
             "type": "string",
