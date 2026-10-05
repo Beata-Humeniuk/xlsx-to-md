@@ -5,6 +5,8 @@
 // fixed prefixes (s: for SpreadsheetML, r:, rel:) by namespace URI, so the
 // reader does not depend on which prefixes a producer happened to choose.
 
+const { decodeXml } = require('./text');
+
 const CANONICAL = {
   'http://schemas.openxmlformats.org/spreadsheetml/2006/main': 's',
   'http://purl.oclc.org/ooxml/spreadsheetml/main': 's',
@@ -46,7 +48,7 @@ function canonicalName(qname, scope, isAttr) {
 const ATTR = /([^\s=]+)\s*=\s*("([^"]*)"|'([^']*)')/g;
 
 function parseXml(text) {
-  if (Buffer.isBuffer(text)) text = text.toString('utf8');
+  if (Buffer.isBuffer(text)) text = decodeXml(text);
   if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
   const root = { name: '#document', attrs: {}, children: [] };
   const stack = [{ node: root, scope: {} }];

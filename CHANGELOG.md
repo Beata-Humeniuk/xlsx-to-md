@@ -7,6 +7,12 @@ This file lists user-visible changes to Excel & CSV to Markdown. The project fol
 
 ### Fixed
 
+- Polish letters shown as “�” in workbooks whose parts are written in
+  Windows-1250 (`encoding="windows-1250"`, used by some exporters): the
+  declared encoding is now honoured, as Excel does. CSV files that mix UTF-8
+  and Windows-1250 lines are read line by line. Characters already lost in
+  the file itself are pointed out above the grid.
+
 - Excel's temporary lock files (`~$name.xlsx`, `~$name.xlsm`, present while
   a workbook is open in Excel) are no longer offered in the Explorer menu.
   Opened anyway, they explain what they are and offer to open the workbook

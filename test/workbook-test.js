@@ -91,6 +91,30 @@ check('rich text and escaped characters in shared strings', () => {
   eq(one.text[0][1], 'Line\ntwo');
 });
 
+check('parts in a declared encoding (windows-1250)', () => {
+  const MAIN = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+  const REL = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+  const PKG = 'http://schemas.openxmlformats.org/package/2006/relationships';
+  const cp1250 = (s) => Buffer.from(Array.from(s, (ch) => ({ 'ł': 0xb3, 'ą': 0xb9, 'ż': 0xbf, 'ó': 0xf3 }[ch] || ch.charCodeAt(0))));
+  const buf = zip({
+    '_rels/.rels': '<Relationships xmlns="' + PKG + '"><Relationship Id="r" Type="' + REL + '/officeDocument" Target="xl/workbook.xml"/></Relationships>',
+    'xl/workbook.xml': '<workbook xmlns="' + MAIN + '" xmlns:r="' + REL + '"><sheets><sheet name="S" sheetId="1" r:id="w"/></sheets></workbook>',
+    'xl/_rels/workbook.xml.rels': '<Relationships xmlns="' + PKG + '"><Relationship Id="w" Type="' + REL + '/worksheet" Target="s.xml"/>'
+      + '<Relationship Id="t" Type="' + REL + '/sharedStrings" Target="ss.xml"/></Relationships>',
+    'xl/ss.xml': cp1250('<?xml version="1.0" encoding="windows-1250"?><sst xmlns="' + MAIN + '"><si><t>Błąd bieżącego</t></si></sst>'),
+    'xl/s.xml': cp1250('<?xml version="1.0" encoding="Windows-1250"?><worksheet xmlns="' + MAIN + '"><sheetData><row r="1">'
+      + '<c r="A1" t="s"><v>0</v></c><c r="B1" t="inlineStr"><is><t>Usługa ó</t></is></c></row></sheetData></worksheet>'),
+  });
+  const one = openWorkbook(buf).loadSheet(0);
+  eq(one.text[0].join('|'), 'Błąd bieżącego|Usługa ó');
+});
+
+check('UTF-8 declared but not: read with the code page', () => {
+  const { decodeXml } = require('../src/text');
+  eq(decodeXml(Buffer.concat([Buffer.from('<?xml version="1.0"?><t>B'), Buffer.from([0xb3, 0xb9]), Buffer.from('d</t>')])), '<?xml version="1.0"?><t>Błąd</t>');
+  eq(decodeXml(Buffer.from('<t>Błąd</t>', 'utf8')), '<t>Błąd</t>');
+});
+
 check('macro-enabled workbook (.xlsm): macros and macro sheets are skipped', () => {
   const MAIN = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
   const REL = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';

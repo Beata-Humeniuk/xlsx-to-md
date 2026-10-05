@@ -3,31 +3,16 @@
 // Reads a CSV/TSV file into the same sheet shape as the workbook reader, so
 // the editor, conditions and saved filters work on it unchanged. The
 // encoding (UTF-8, UTF-16 with BOM, or Windows-1250 as Excel writes it in
-// Polish Windows) and the separator (, ; tab |) are recognized from the
-// content; Excel's "sep=;" first line is honoured.
+// Polish Windows — even mixed line by line) and the separator (, ; tab |)
+// are recognized from the content; Excel's "sep=;" first line is honoured.
 
 const { parseNumber, parseDate } = require('./core/filter');
+const { decodeText } = require('./text');
 
 const SEPARATORS = [',', ';', '\t', '|'];
 
 function decode(buf) {
-  if (buf.length >= 3 && buf[0] === 0xef && buf[1] === 0xbb && buf[2] === 0xbf) return buf.toString('utf8', 3);
-  if (buf.length >= 2 && buf[0] === 0xff && buf[1] === 0xfe) return buf.toString('utf16le', 2);
-  if (buf.length >= 2 && buf[0] === 0xfe && buf[1] === 0xff) {
-    const swapped = Buffer.from(buf.subarray(2));
-    swapped.swap16();
-    return swapped.toString('utf16le');
-  }
-  try {
-    return new TextDecoder('utf-8', { fatal: true }).decode(buf);
-  } catch {
-    // Not UTF-8: a CSV saved by Excel with the system code page.
-    try {
-      return new TextDecoder('windows-1250').decode(buf);
-    } catch {
-      return buf.toString('latin1');
-    }
-  }
+  return decodeText(buf);
 }
 
 // Separator counts per line outside quotes, for the first lines.

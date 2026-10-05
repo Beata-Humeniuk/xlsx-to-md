@@ -509,6 +509,11 @@ function renderNotes() {
     if (miss.columns.length) lines.push(T.t('ui.columnsMissing', { names: miss.columns.map((c) => refLabel(c, T)).join(', ') }));
     for (const c of miss.conditions) lines.push(T.t('ui.conditionMissing', { name: refLabel(c.column, T) }));
   }
+  if (S.result) {
+    let broken = 0;
+    for (const t of S.result.tables) for (const row of t.rows) for (const v of row) if (v.includes('\ufffd')) broken++;
+    if (broken) lines.push(T.t('ui.brokenChars', { count: broken }));
+  }
   if (S.columnNotes.added.length) {
     lines.push(T.t('ui.columnsNew', { names: S.columnNotes.added.map((c) => refLabel(c, T)).join(', ') }));
   }

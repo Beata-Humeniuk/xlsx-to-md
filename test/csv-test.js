@@ -27,6 +27,13 @@ check('encodings', () => {
   eq(decode(Buffer.from([0xa3, 0xf3, 0x64, 0x9f])), 'Łódź');
 });
 
+check('mixed file: UTF-8 lines and Windows-1250 lines', () => {
+  const utf = Buffer.from('Kod;Opis\n1;Błąd zwracany\n', 'utf8');
+  const cp = Buffer.from([0x32, 0x3b, 0x42, 0xb3, 0xb9, 0x64, 0x0a]); // "2;Błąd\n" in Windows-1250
+  const s = readCsv(Buffer.concat([utf, cp]), 'x');
+  eq(s.text.map((r) => r[1]).join('|'), 'Opis|Błąd zwracany|Błąd');
+});
+
 check('sep= line, ragged rows, trailing empty lines', () => {
   const s = readCsv(Buffer.from('sep=;\nA;B;C\n1;2\n\n\n'), 'x');
   eq(s.separator, ';');
