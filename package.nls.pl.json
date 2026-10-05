@@ -1,5 +1,5 @@
 {
-  "description": "Zamień potrzebną część skoroszytu Excela na Markdown: wybierz arkusz i zakresy w podglądzie, kolumny po nazwach, przefiltruj wiersze, zobacz wynik — i zapisz to ustawienie jako filtr do użycia z dowolnym skoroszytem.",
+  "description": "Zamień potrzebną część skoroszytu Excela lub pliku CSV na Markdown: wybierz arkusz i zakresy w podglądzie, kolumny po nazwach, przefiltruj wiersze, zobacz wynik — i zapisz to ustawienie jako filtr do użycia z dowolnym skoroszytem.",
   "command.open.title": "Eksportuj do Markdown…",
   "command.manageFilters.title": "Zarządzaj zapisanymi filtrami",
   "config.openAfterExport.description": "Co otworzyć po wyeksportowaniu Markdown do pliku.",

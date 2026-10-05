@@ -1,5 +1,5 @@
 {
-  "description": "Turn the part of an Excel workbook you need into Markdown: pick the sheet and ranges in a live grid, choose columns by name, filter rows, preview the result — and save the setup as a filter to reuse on any workbook.",
+  "description": "Turn the part of an Excel workbook or CSV file you need into Markdown: pick the sheet and ranges in a live grid, choose columns by name, filter rows, preview the result — and save the setup as a filter to reuse on any workbook.",
   "command.open.title": "Export to Markdown…",
   "command.manageFilters.title": "Manage Saved Filters",
   "config.openAfterExport.description": "What to open after exporting the Markdown to a file.",

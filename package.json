@@ -2,7 +2,7 @@
   "name": "xlsx-to-md",
   "displayName": "Excel to Markdown",
   "description": "%description%",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "beatahumeniuk",
   "icon": "media/icon.png",
   "license": "MIT",
@@ -31,6 +31,7 @@
   "keywords": [
     "excel",
     "xlsx",
+    "csv",
     "spreadsheet",
     "markdown",
     "table",
@@ -68,6 +69,12 @@
           },
           {
             "filenamePattern": "*.xltm"
+          },
+          {
+            "filenamePattern": "*.csv"
+          },
+          {
+            "filenamePattern": "*.tsv"
           }
         ],
         "priority": "option"
@@ -77,7 +84,7 @@
       "explorer/context": [
         {
           "command": "xlsxToMd.open",
-          "when": "resourceExtname =~ /^\\.(xlsx|xlsm|xltx|xltm)$/i",
+          "when": "resourceExtname =~ /^\\.(xlsx|xlsm|xltx|xltm|csv|tsv)$/i",
           "group": "7_modification"
         }
       ]
@@ -119,7 +126,7 @@
   "scripts": {
     "build": "esbuild src/extension.js --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --minify --charset=utf8 && esbuild src/webview/main.js --bundle --outfile=out/webview.js --format=iife --platform=browser --target=es2020 --minify --charset=utf8",
     "vscode:prepublish": "npm run build",
-    "test": "node test/nls-test.js && node test/numfmt-test.js && node test/workbook-test.js && node test/filter-test.js && node test/extract-test.js && node test/resolve-test.js && node test/recipe-test.js",
+    "test": "node test/nls-test.js && node test/numfmt-test.js && node test/workbook-test.js && node test/filter-test.js && node test/extract-test.js && node test/resolve-test.js && node test/recipe-test.js && node test/csv-test.js",
     "package": "npm run build && vsce package --no-dependencies"
   },
   "devDependencies": {

@@ -22,6 +22,9 @@ function headerScore(sheet, names) {
 
 function pickSheet(workbook, source, notes) {
   const sheets = workbook.sheets;
+  // A CSV file (or a one-sheet workbook) has nothing to choose from; its
+  // sheet name follows the file name and is no reason for a note.
+  if (sheets.length === 1) return 0;
   const names = savedHeaders(source);
   const wanted = String(source.sheet || '').toLowerCase();
   const byName = sheets.findIndex((s) => s.name.toLowerCase() === wanted);

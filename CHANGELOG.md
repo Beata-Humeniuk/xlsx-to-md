@@ -3,6 +3,14 @@
 This file lists user-visible changes to Excel to Markdown. The project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-10-05
+
+### Added
+
+- CSV and TSV files, with the same editor, conditions and saved filters as
+  workbooks. The separator and encoding (UTF-8, UTF-16, Windows-1250) are
+  recognized automatically; Excel's `sep=` line is honoured.
+
 ## [0.1.0] - 2026-10-05
 
 ### Added

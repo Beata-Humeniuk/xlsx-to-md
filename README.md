@@ -1,7 +1,7 @@
 # Excel to Markdown
 
-Take exactly the part of an Excel workbook you need and turn it into
-Markdown — not the whole file. Pick the sheet and the cells in a live grid,
+Take exactly the part of an Excel workbook or CSV file you need and turn it
+into Markdown — not the whole file. Pick the sheet and the cells in a live grid,
 choose the columns, filter the rows, see the Markdown, export. Save the setup
 as a filter and next time it is one click (plus the values you chose to give
 each time).
@@ -11,12 +11,23 @@ telemetry and never runs formulas or macros: it reads the values Excel saved.
 
 ## Open a workbook
 
-- In the Explorer, right-click an `.xlsx` (or `.xlsm`, `.xltx`, `.xltm`) file
-  and choose **Export to Markdown…**.
+- In the Explorer, right-click an `.xlsx` (or `.xlsm`, `.xltx`, `.xltm`),
+  `.csv` or `.tsv` file and choose **Export to Markdown…**.
 - Or run **Excel to Markdown: Export to Markdown…** from the Command Palette.
 - Or **Open With… → Excel to Markdown** on the file.
 
 Old `.xls` files need to be saved as `.xlsx` in Excel first.
+
+### CSV files
+
+A CSV file opens as a workbook with one sheet, named after the file, and
+everything below works the same — selection, columns, conditions, saved
+filters. The separator (`,` `;` tab `|`) and the encoding (UTF-8, UTF-16, or
+Windows-1250 as Excel saves CSV on Polish Windows) are recognized from the
+content, and Excel's `sep=;` first line is honoured. Numbers, dates and
+`TRUE`/`FALSE` are recognized so conditions compare them as such; the text
+goes into the Markdown exactly as written. A filter saved on one CSV file
+works on the next one, even when columns were added or moved.
 
 ## Choose the data
 

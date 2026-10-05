@@ -24,7 +24,7 @@ needed.
 ## Scope notes
 
 The extension makes no network requests, sends no telemetry and starts no
-programs. It reads the workbook you open, and writes only the Markdown file
+programs. It reads the workbook or CSV file you open, and writes only the Markdown file
 you choose in the save dialog. Saved filters are kept in VS Code's global
 extension storage (and synced by Settings Sync when you use it); they hold the
 sheet name, range addresses, header names, conditions and options, and the

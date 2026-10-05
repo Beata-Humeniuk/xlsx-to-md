@@ -8,6 +8,7 @@
 const vscode = require('vscode');
 const path = require('path');
 const { openWorkbook, sniff } = require('./workbook');
+const { openCsv, isCsvName } = require('./csv');
 const { resolveSource } = require('./core/resolve');
 const { messagesFor, baseLanguage } = require('./nls');
 const { summary, conditionsText } = require('./filters');
@@ -106,6 +107,10 @@ class WorkbookPanel {
   async load() {
     const bytes = Buffer.from(await vscode.workspace.fs.readFile(this.uri));
     const kind = sniff(bytes);
+    if (isCsvName(this.fileName) && kind !== 'xlsx') {
+      this.workbook = openCsv(bytes, this.fileName);
+      return;
+    }
     if (kind === 'xls') throw Object.assign(new Error(this.nls.t('error.oldXls', { file: this.fileName })), { shown: true });
     if (kind !== 'xlsx') throw Object.assign(new Error(this.nls.t('error.notXlsx', { file: this.fileName })), { shown: true });
     try {

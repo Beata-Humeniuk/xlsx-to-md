@@ -6,7 +6,7 @@ const { FilterStore, summary, conditionsText } = require('./filters');
 const { WorkbookPanel } = require('./panel');
 
 const VIEW_TYPE = 'xlsxToMd.workbook';
-const EXTENSIONS = ['xlsx', 'xlsm', 'xltx', 'xltm'];
+const EXTENSIONS = ['xlsx', 'xlsm', 'xltx', 'xltm', 'csv', 'tsv'];
 
 const nls = forLanguage(vscode.env && vscode.env.language);
 

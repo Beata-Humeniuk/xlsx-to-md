@@ -13,7 +13,7 @@ const EN = {
   'action.openSettings': 'Open settings',
 
   'dialog.openLabel': 'Open',
-  'dialog.filter': 'Excel workbooks',
+  'dialog.filter': 'Excel workbooks and CSV files',
   'dialog.saveLabel': 'Export',
   'dialog.markdown': 'Markdown',
 
@@ -191,7 +191,7 @@ const PL = {
   'action.openSettings': 'Otwórz ustawienia',
 
   'dialog.openLabel': 'Otwórz',
-  'dialog.filter': 'Skoroszyty Excela',
+  'dialog.filter': 'Skoroszyty Excela i pliki CSV',
   'dialog.saveLabel': 'Eksportuj',
   'dialog.markdown': 'Markdown',
 
